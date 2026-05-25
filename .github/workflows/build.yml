@@ -1,0 +1,41 @@
+name: Build EXE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Compile
+        run: javac EstoqueApp.java
+
+      - name: Create JAR
+        run: jar cfe EstoqueApp.jar EstoqueApp EstoqueApp.class
+
+      - name: Generate EXE
+        run: |
+          jpackage `
+          --input . `
+          --name EstoqueApp `
+          --main-jar EstoqueApp.jar `
+          --main-class EstoqueApp `
+          --type exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EstoqueApp-EXE
+          path: "*.exe"
