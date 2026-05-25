@@ -1,4 +1,4 @@
-name: Build EXE
+name: Build Portable App
 
 on:
   push:
@@ -10,10 +10,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -25,17 +25,17 @@ jobs:
       - name: Create JAR
         run: jar cfe InventoryApp.jar InventoryApp InventoryApp.class
 
-      - name: Generate EXE
+      - name: Generate Portable App
         run: |
           jpackage `
           --input . `
           --name InventoryApp `
           --main-jar InventoryApp.jar `
           --main-class InventoryApp `
-          --type exe
+          --type app-image
 
-      - name: Upload EXE
+      - name: Upload Portable App
         uses: actions/upload-artifact@v4
         with:
-          name: InventoryApp-EXE
-          path: "*.exe"
+          name: InventoryApp-Portable
+          path: InventoryApp/**
