@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Java 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -35,7 +35,8 @@ jobs:
           --name InventoryApp `
           --main-jar InventoryApp.jar `
           --main-class InventoryApp `
-          --type app-image
+          --type app-image `
+          --win-console
 
       - name: Upload Portable App
         uses: actions/upload-artifact@v4
