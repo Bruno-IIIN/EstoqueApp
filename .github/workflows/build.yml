@@ -19,23 +19,23 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Compile
-        run: javac EstoqueApp.java
+      - name: Compile Java
+        run: javac InventoryApp.java
 
       - name: Create JAR
-        run: jar cfe EstoqueApp.jar EstoqueApp EstoqueApp.class
+        run: jar cfe InventoryApp.jar InventoryApp InventoryApp.class
 
       - name: Generate EXE
         run: |
           jpackage `
           --input . `
-          --name EstoqueApp `
-          --main-jar EstoqueApp.jar `
-          --main-class EstoqueApp `
+          --name InventoryApp `
+          --main-jar InventoryApp.jar `
+          --main-class InventoryApp `
           --type exe
 
-      - name: Upload Artifact
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: EstoqueApp-EXE
+          name: InventoryApp-EXE
           path: "*.exe"
