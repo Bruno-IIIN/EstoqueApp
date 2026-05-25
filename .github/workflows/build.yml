@@ -22,13 +22,16 @@ jobs:
       - name: Compile Java
         run: javac InventoryApp.java
 
+      - name: Create Build Folder
+        run: mkdir build
+
       - name: Create JAR
-        run: jar cfe InventoryApp.jar InventoryApp InventoryApp.class
+        run: jar cfe build/InventoryApp.jar InventoryApp InventoryApp.class
 
       - name: Generate Portable App
         run: |
           jpackage `
-          --input . `
+          --input build `
           --name InventoryApp `
           --main-jar InventoryApp.jar `
           --main-class InventoryApp `
